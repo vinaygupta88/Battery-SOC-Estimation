@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Battery SOC Estimation</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <link rel="shortcut icon" href="#">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+        <script src="https://cdn.plot.ly/plotly-2.30.0.min.js" charset="utf-8"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        
+    </head>
+
+    <body class="{{ page_class }}">
+
+    <!-- ================= NAVBAR ================= -->
+        <nav class="navbar">
+            <div class="logo">
+                <svg class="battery-logo" width="45" height="45" viewBox="0 0 100 100">
+                    <rect x="10" y="30" width="70" height="40" rx="8" fill="none" stroke="#00F5FF" stroke-width="5"/>
+                    <rect x="80" y="42" width="10" height="16" fill="#00F5FF"/>
+                    <circle cx="30" cy="50" r="4" fill="#39FF14"/>
+                    <circle cx="50" cy="40" r="4" fill="#39FF14"/>
+                    <circle cx="50" cy="60" r="4" fill="#39FF14"/>
+                    <circle cx="70" cy="50" r="4" fill="#39FF14"/>
+                    <line x1="30" y1="50" x2="50" y2="40" stroke="#39FF14" stroke-width="2"/>
+                    <line x1="30" y1="50" x2="50" y2="60" stroke="#39FF14" stroke-width="2"/>
+                    <line x1="50" y1="40" x2="70" y2="50" stroke="#39FF14" stroke-width="2"/>
+                    <line x1="50" y1="60" x2="70" y2="50" stroke="#39FF14" stroke-width="2"/>
+                </svg>
+                <span class="logo-text">BatteryAI</span>
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/prediction">Prediction</a></li>
+            </ul>
+        </nav>
+
+    <!--================= CONTENT =================-->
+        {% block content %}{% endblock %}
+
+
+    <!-- ================= CHATBOT ================= -->
+        <div id="chatbot-container">
+            <div id="chatbot-toggle" onclick="toggleChat()">
+                <img src="{{ url_for('static', filename='image/bot.png') }}">
+                <div id="chatbot-tooltip">
+                    I am an AI assistant. <br>
+                    You can ask me questions related to Battery SOC
+                </div>
+            </div>
+
+            <div id="chatbot-box">
+                <div id="chatbot-header">
+                    AI Assistant
+                    <span onclick="toggleChat()">✖</span>
+                </div>
+
+                <div id="chatbot-messages"></div>
+
+                <div id="chatbot-input">
+                    <input type="text" id="chatbot-text" placeholder="Ask about project...">
+                    <button onclick="sendMessage()">➤</button>
+                </div>
+            </div>
+        </div>
+    <!--================= FOOTER =================-->
+        <footer>
+            <p>Battery SOC Estimation using Machine Learning</p>
+            <p>© 2026 Final Year Project | Vinay</p>
+        </footer>
+
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    </body>
+</html>
