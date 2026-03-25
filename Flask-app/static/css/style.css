@@ -1,0 +1,203 @@
+/*========== Global ========== */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+/* =============== Animated Background =============== */
+    /* ===== INDEX PAGE ===== */
+body.index-page {
+    background: linear-gradient(-45deg,#0f2027,#203a43,#3a1c71,#2c5364,#00F5FF);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+    color: white;
+}
+
+
+@keyframes gradientBG{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+/* =============== NAVBAR =============== */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 80px;
+background:rgba(0,0,0,0.4);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.2);
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:22px;
+font-weight:600;
+color:#00F5FF;
+}
+
+.logo-text{
+letter-spacing:1px;
+}
+
+.battery-logo{
+transition:0.4s;
+}
+
+.logo:hover .battery-logo{
+transform:scale(1.2) rotate(5deg);
+filter:drop-shadow(0 0 8px #00F5FF);
+}
+
+.nav-links{
+list-style:none;
+display:flex;
+gap:30px;
+}
+
+.nav-links a{
+text-decoration:none;
+color:white;
+font-size:16px;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+color:#00F5FF;
+}
+
+/* =============== INDEX-PAGE ================= */
+    /* ============= HERO SECTION ============= */
+.hero{
+min-height:85vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:60px 20px;
+background:rgba(0,0,0,0.25);
+border-top:1px solid rgba(255,255,255,0.1);
+border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+.title{
+font-size:48px;
+margin-bottom:20px;
+color:#00F5FF;
+}
+
+.subtitle{
+font-size:20px;
+opacity:0.85;
+margin-bottom:40px;
+}
+    /* =============== CARDS =============== */
+.project-info{
+display:flex;
+justify-content:center;
+gap:30px;
+flex-wrap:wrap;
+margin-bottom:40px;
+}
+
+.card{
+background:rgba(255,255,255,0.1);
+padding:25px 35px;
+border-radius:15px;
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.2);
+transition:0.5s;
+animation:float 5s ease-in-out infinite;
+}
+
+.card:hover{
+transform:translateY(-10px) scale(1.05);
+background:rgba(255,255,255,0.2);
+}
+
+.card h3{
+margin-bottom:10px;
+color:#39FF14;
+}
+.team-list{
+margin-top:10px;
+text-align:left;
+padding-left:20px;
+}
+
+.team-list li{margin-bottom:5px;}
+
+    /*==================== Highlight text ====================*/
+.highlight{
+font-size:20px;
+font-weight:600;
+color:#ebf44a;
+}
+        /*========== Guide Card ====================*/
+.itself-card{
+border:1px solid #60cc8d;
+box-shadow:0 0 15px rgba(108, 217, 221, 0.4);
+}
+
+.guide-name{
+font-size:18px;
+font-weight:600;
+margin-top:10px;
+}
+
+.designation{
+font-size:14px;
+opacity:0.8;
+}
+
+    /* =============== BUTTON =============== */
+.btn{
+display:inline-block;
+padding:12px 35px;
+margin-top:20px;
+border-radius:30px;
+text-decoration:none;
+font-weight:600;
+background:linear-gradient(45deg,#00F5FF,#7A5FFF);
+box-shadow:0 0 20px #00F5FF;
+color:white;
+transition:0.3s;
+}
+
+.btn:hover{
+transform:scale(1.1);
+box-shadow:0 0 40px #00F5FF;
+}
+
+    /* ===== FLOAT ANIMATION ===== */
+@keyframes float{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-12px);}
+100%{transform:translateY(0px);}
+}
+
+/* =============== FOOTER =============== */
+footer{
+text-align:center;
+padding:25px;
+background:rgba(0,0,0,0.5);
+border-top:1px solid rgba(255,255,255,0.2);
+font-size:14px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+.title{
+font-size:34px;
+}
+.navbar{
+padding:20px;
+}}
+d
