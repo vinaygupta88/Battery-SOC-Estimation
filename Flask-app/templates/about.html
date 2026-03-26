@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="about-section">
+    <div class="about-container">
+        <!-- ==== HERO SECTION ===== -->
+        <div class="about-hero">
+            <h1 class="title">
+                <span id="typing"></span>
+            </h1>
+            <p>Bridging the gap between complex electrochemical dynamics and real-world Electric 
+            Vehicle (EV) performance using Multi-Sensor Fusion, Deep Learning, and Advanced Architectures.</p>
+        </div>
+        <!--  Problem Statement -->
+        <div class="content-section">
+            <h2><i class="fas fa-car-battery"></i> The Motivation & The Challenge</h2>
+            <div class="grid-2-col">
+                <div>
+                    <p>The <strong>State of Charge (SOC)</strong> acts exactly like a fuel gauge in a gas-powered vehicle, indicating the remaining energy. 
+                        However, accurately measuring SOC is a highly complex undertaking because it cannot be directly measured. It relies heavily on non-linear,
+                        time-varying electrochemical properties inside the battery.</p>
+                    <p><strong>Why traditional methods fail?</strong></p>
+                    <ul>
+                        <li><span class="highlight">Coulomb Counting:</span> Prone to error accumulation from current measurement errors, integration approximation, capacity uncertainty, and oscillator drift.</li>
+                        <li><span class="highlight">Kalman Filters:</span> Highly accurate but computationally expensive and incredibly difficult to tune for dynamic conditions.</li>
+                    </ul>
+                    <p>This project leverages Artificial Intelligence to automatically infer non-linear relationships, completely bypassing the need for solving complex analytical multiphysics equations.</p>
+                </div>
+                <div class="image-box">
+                    <img src="/static/image/ev_battery.jpg" alt="EV Battery">
+                    <div class="image-caption">Visualization of Electric Vehicle Battery Packs</div>
+                </div>
+            </div>
+        </div>
+
+            <!-- About Dataset and Feature engineering -->
+        <div class="content-section">
+            <h2><i class="fas fa-database"></i> Dataset & Feature Engineering</h2>
+            <p>This project utilizes a robust, publicly available dataset from McMaster University. The experiments were performed on an <strong>LG HG2 18650 cell</strong> (Nominal Capacity: 3000 mAh, Voltage: 3.7V).</p>
+            
+            <div class="grid-3-col">
+                <div class="feature-card">
+                    <h3><i class="fas fa-temperature-low"></i> Thermal Testing</h3>
+                    <p>Tests were conducted across a wide ambient temperature range starting from <strong>40°C all the way down to -20°C</strong> to capture thermal battery behaviors.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-route"></i> Drive Cycles</h3>
+                    <p>Data was simulated over various real-world EV drive cycles including <strong>UDDS, LA-92, US-06, and Mixed Cycles</strong>.</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-cogs"></i> Preprocessing</h3>
+                    <p>We discovered that applying <strong>Min-Max Normalization</strong> drastically decreased scale distortion, easily outperforming standard Mean Normalization.</p>
+                </div>
+            </div>
+
+            <div class="image-box" style="max-width: 800px; margin: 40px auto 0 auto;">
+                <img src="/static/image/discharge_graph.jpg" alt="Discharge Cycle">
+                <div class="image-caption">UDDS Discharge Cycle at -10°C depicting Voltage Drops Over Time</div>
+            </div>
+        </div>
+
+            <!-- ML Architecture -->
+        <div class="content-section">
+            <h2><i class="fas fa-network-wired"></i> Machine Learning Architectures</h2>
+            <p>Three powerful neural network architectures were trained, tuned, and evaluated to map time-series sensor telemetry to the continuous SOC prediction label.</p>
+            
+            <div class="grid-3-col">
+                <div class="feature-card">
+                    <h3>Deep Neural Network (DNN)</h3>
+                    <p>Utilized multiple fully connected hidden layers (64 units each) with a <strong>ReLU</strong> activation function. The model processed 1 Hz resampled data and achieved solid convergence within 25 epochs.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Conv. Neural Network (CNN)</h3>
+                    <p>Using 1D Convolutional layers to extract local spatial features from voltage/current streams. It proved to be the most efficient, training in just <strong>10-15 minutes</strong> with the lowest errors.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>LSTM Networks</h3>
+                    <p>Built with 4 hidden layers and a <strong>SELU</strong> activation function. Capable of handling temporal dependencies natively. However, training required over <strong>10 hours</strong> of heavy GPU compute.</p>
+                </div>
+            </div>
+        </div>
+
+            <!-- formula container -->
+        <div class="content-section">
+            <h2><i class="fas fa-square-root-alt"></i> Mathematical Formulation & Metrics</h2>
+            <p>The performance of the predictive AI models is benchmarked against standard physical representations and statistical metrics.</p>
+
+            <div class="grid-2-col">
+                <div class="formula-box">
+                    <h4>Traditional Coulomb Counting</h4>
+                    <p class="math-text">$$SOC(t) = SOC(t_0) - \frac{1}{C_n} \int_{t_0}^{t} I(\tau) d\tau$$</p>
+                    <p class="caption">Where \( C_n \) is the nominal capacity and \( I(\tau) \) represents the discharge current over time. It demonstrates why integration errors accumulate heavily over long EV trips.</p>
+                </div>
+                
+                <div class="formula-box">
+                    <h4>Mean Absolute Error (MAE)</h4>
+                    <p class="math-text">$$MAE = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|$$</p>
+                    <p class="caption">The primary loss function optimized during Backpropagation. It measures the absolute distance between actual SOC (\( y_i \)) and predicted SOC (\( \hat{y}_i \)).</p>
+                </div>
+            </div>
+        </div>
+
+            <!-- technologies and tools -->
+        <div class="content-section">
+            <h2><i class="fas fa-laptop-code"></i> Technologies & Tools Used</h2>
+            <div class="grid-3-col" style="text-align: center;">
+                <div class="feature-card" style="padding: 20px;">
+                    <i class="fab fa-python" style="font-size: 3rem; color: #ffff14; margin-bottom: 15px;"></i>
+                    <h3 style="justify-content: center; font-size: 1.2rem;">Python & Pandas</h3>
+                    <p style="font-size: 0.95rem;">For Core Logic & Data Processing</p>
+                </div>
+                <div class="feature-card" style="padding: 20px;">
+                    <i class="fas fa-brain" style="font-size: 3rem; color: #ff0015; margin-bottom: 15px;"></i>
+                    <h3 style="justify-content: center; font-size: 1.2rem;">TensorFlow & Keras</h3>
+                    <p style="font-size: 0.95rem;">For building DNN, CNN & LSTM models</p>
+                </div>
+                <div class="feature-card" style="padding: 20px;">
+                    <i class="fas fa-server" style="font-size: 3rem; color: #14ff57; margin-bottom: 15px;"></i>
+                    <h3 style="justify-content: center; font-size: 1.2rem;">Flask Framework</h3>
+                    <p style="font-size: 0.95rem;">For Backend & Model Integration</p>
+                </div>
+            </div>
+        </div>
+
+            <!-- workflow -->
+        <div class="content-section">
+            <h2><i class="fas fa-project-diagram"></i> Project Workflow</h2>
+            <div class="grid-3-col">
+
+                <div class="feature-card">
+                    <h3>1️⃣ Data Collection</h3>
+                    <p>Battery telemetry including voltage, current, temperature and SOC labels were collected from the dataset.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>2️⃣ Data Preprocessing</h3>
+                    <p>Noise removal, resampling and Min-Max normalization were applied to improve model convergence.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>3️⃣ Model Training</h3>
+                    <p>DNN, CNN and LSTM architectures were trained to learn complex battery dynamics.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>4️⃣ Model Evaluation</h3>
+                    <p>Models were evaluated using MAE metric to determine the most accurate architecture.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>5️⃣ Deployment</h3>
+                    <p>The best model was integrated into a Flask web application for real-time SOC prediction.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- application -->
+        <div class="content-section">
+            <h2><i class="fas fa-bolt"></i> Applications</h2>
+            <ul>
+                <li>Electric Vehicle Battery Management Systems (BMS)</li>
+                <li>Battery Health Monitoring</li>
+                <li>Energy Storage Systems</li>
+                <li>Smart Grid Applications</li>
+                <li>Electric Mobility and Renewable Energy Systems</li>
+            </ul> 
+        </div>
+
+            <!-- Experimental Results -->
+        <div class="content-section">
+            <h2><i class="fas fa-chart-line"></i> Experimental Results & Performance</h2>
+            <p>After rigorous testing with varied hyperparameters, batch sizes, and datasets, the <span class="highlight">CNN Model with Min-Max Normalization</span> emerged as the best performing architecture for real-time predictions.</p>
+            
+            <!-- Image of notebook -->
+            <div class="chart-container">
+                <h3 class="chart-title">Result on Test Dataset during training</h3>
+                
+                <div class="model-images-list">
+                    <div class="model-img-wrapper">
+                        <h4 class="model-name">DNN Model</h4>
+                        <img src="/static/image/dnn.png" alt="DNN Results" class="full-width-img">
+                    </div>
+                    
+                    <div class="model-img-wrapper">
+                        <h4 class="model-name">CNN Model </h4>
+                        <img src="/static/image/cnn.png" alt="CNN Results" class="full-width-img">
+                    </div>
+                    
+                    <div class="model-img-wrapper">
+                        <h4 class="model-name">LSTM Model</h4>
+                        <img src="/static/image/lstm.png" alt="LSTM Results" class="full-width-img">
+                    </div>
+                </div>
+            </div>
+
+                <!-- Error Comparison -->
+            <div class="chart-container">
+                <h3 class="chart-title">Testing Mean Absolute Error (MAE %) Comparison</h3>
+                <div class="bar-chart">
+                    <div class="bar-wrapper">
+                        <span class="bar-value">2.07%</span>
+                        <div class="bar" style="height: 50%;"></div>
+                        <span class="bar-label">DNN</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <span class="bar-value" style="color: #39FF14;">1.70%</span>
+                        <div class="bar best" style="height: 35%;"></div>
+                        <span class="bar-label">CNN</span>
+                    </div>
+                    <div class="bar-wrapper">
+                        <span class="bar-value">3.20%</span>
+                        <div class="bar" style="height: 75%;"></div>
+                        <span class="bar-label">LSTM</span>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 50px; color: #8b949e;">*Lower percentage indicates higher accuracy in SOC prediction.</p>
+            </div>
+
+                <!-- table -->
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Model Architecture</th>
+                        <th>Training Time</th>
+                        <th>Training MAE</th>
+                        <th>Validation MAE</th>
+                        <th>Testing MAE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DNN (Exp 1)</td>
+                        <td>~1 Hour</td>
+                        <td>0.86%</td>
+                        <td>2.64%</td>
+                        <td>2.07%</td>
+                    </tr>
+                    <tr>
+                        <td class="best-cell">CNN (Exp 2)</td>
+                        <td class="best-cell">10 - 15 Mins</td>
+                        <td class="best-cell">0.91%</td>
+                        <td class="best-cell">2.38%</td>
+                        <td class="best-cell">1.70%</td>
+                    </tr>
+                    <tr>
+                        <td>LSTM (Exp 3)</td>
+                        <td>~10 Hours</td>
+                        <td>1.67%</td>
+                        <td>3.75%</td>
+                        <td>3.20%</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- prediction button -->
+            <a href="/prediction" class="btn">Start Prediction</a>
+        </div>
+
+            <!-- Future work -->
+        <div class="content-section">
+            <h2><i class="fas fa-rocket"></i> Future Scope & Explainable AI</h2>
+            <ul>
+                <li><strong>Mitigating Overfitting:</strong> Implementing advanced <em>Regularization</em> and <em>Dropout</em> techniques to further reduce the gap between training and validation loss.</li>
+                <li><strong>Automated Hyperparameter Tuning:</strong> Utilizing TensorFlow's auto-tuning libraries to dynamically discover optimized neural network topologies.</li>
+                <li><strong>Explainable AI (XAI):</strong> Integrating techniques like <em>InputXGradient</em> and <em>Pairwise Importance Estimate Extension (PIEE)</em> to break the "black-box" nature of models, allowing engineers to understand exactly which sensor parameters dictate battery degradation.</li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}
