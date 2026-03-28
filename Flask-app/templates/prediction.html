@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<section class="predict-section">
+    <div class="glass-container">
+        <h1><i class="fas fa-microchip"></i> State of Charge Predictor</h1>
+
+        <!--=================Form =================-->
+        <form id="predictionForm" enctype="multipart/form-data">
+            <div class="control-group">
+                <label><i class="fas fa-brain"></i> Select Model</label>
+                <select name="model_type" id="model-select" required>
+                    <option value="" disabled selected>-- Select  Model --</option>
+                    <option value="cnn">Convolutional Neural Network (CNN) - Highest Accuracy</option>
+                    <option value="lstm">Long Short-Term Memory (LSTM) - Best for Sequences</option>
+                    <option value="dnn">Deep Neural Network (DNN) - Baseline</option>
+                </select>
+            </div>
+
+            <div id="csv-section" class="input-area active">
+                <h3 style="color: #b14bf4; margin-top: 0;">Upload Telemetry Data (.csv)</h3>
+                <p style="color: #8b949e; font-size: 0.9rem;">File must contain Voltage (V), Current (A), and Temperature (°C) columns.</p>
+                <div class="file-upload-wrapper">
+                    <input type="file" name="file" id="csvFile" accept=".csv" required>
+                </div>
+            </div>
+
+            <button type="submit" class="predict-btn"><i class="fas fa-microchip"></i> Run Prediction</button>
+        </form>
+        <!--=================OUTPUT ================= -->
+
+            <!-- spinner which show terminal execution -->
+        <div id="loading-screen">
+            <div class="spinner"></div>
+            <p style="color: #00F5FF; font-size: 1.2rem; margin-top: 15px;">Model is analyzing data...</p>
+            
+            <div class="progress-container" id="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Initializing AI Engine...</div>
+        </div>
+    </div>
+
+        <!-- Timeline -->
+    <div id="results-block" class="glass-container" style="display: none;">
+        <div class="soc-result">
+            <h2 style="color: #e6edf3; margin-bottom: 20px;">Predicted Capacity Timeline (Ah)</h2>
+            
+            <div style="display: flex; justify-content: space-between; gap: 15px; margin-bottom: 20px;">
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid #30363d; text-align: center; width: 32%;">
+                    <h4 style="color: #00F5FF; margin: 0 0 10px 0;"><i class="fas fa-battery-full"></i> Start</h4>
+                    <div class="soc-value" id="start-soc" style="font-size: 2.5rem; color: #00F5FF; margin-top: 0; text-shadow: 0 0 10px rgba(0,245,255,0.4);">--</div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid #30363d; text-align: center; width: 32%;">
+                    <h4 style="color: #39FF14; margin: 0 0 10px 0;"><i class="fas fa-battery-half"></i> Middle</h4>
+                    <div class="soc-value" id="mid-soc" style="font-size: 2.5rem; color: #39FF14; margin-top: 0; text-shadow: 0 0 10px rgba(57,255,20,0.4);">--</div>
+                </div>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid #30363d; text-align: center; width: 32%;">
+                    <h4 style="color: #ff3366; margin: 0 0 10px 0;"><i class="fas fa-battery-empty"></i> End</h4>
+                    <div class="soc-value" id="end-soc" style="font-size: 2.5rem; color: #ff3366; margin-top: 0; text-shadow: 0 0 10px rgba(255,51,102,0.4);">--</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <h4 style="color:#8b949e; margin:0;">Model Evaluated</h4>
+                <p id="final-model">--</p>
+            </div>
+            <div class="metric-card">
+                <h4 style="color:#8b949e; margin:0;">Mean Absolute Error</h4>
+                <p id="final-mae">--</p>
+            </div>
+            <div class="metric-card">
+                <h4 style="color:#8b949e; margin:0;">Status</h4>
+                <p id="final-status" style="color: #39FF14;">Success</p>
+            </div>
+        </div>
+    </div>
+
+        <!-- uploaded CSV file random 10 row -->
+    <div id="data-preview-block" class="glass-container" style="display: none;">
+        <h2 class="section-title"><i class="fas fa-table"></i> Dataset Preview & Predictions</h2>
+        <p style="text-align: center; color: #8b949e; font-size: 0.95rem;">10 Rows of input features passed to the AI model alongside their predicted results.</p>
+        <div class="table-responsive" id="table-container">
+            </div>
+    </div>
+
+        <!-- Graph from upload dataset / predict actual SOC -->
+    <div id="visuals-block" class="glass-container" style="display: none;">
+        <h2 class="section-title"><i class="fas fa-chart-area"></i> Visualization</h2>
+        <div id="graph-container"></div>
+    </div>
+
+</section>
+
+
+
+{% endblock %}
